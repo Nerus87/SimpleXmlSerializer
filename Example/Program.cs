@@ -17,10 +17,13 @@ namespace Example
             // Creating Object serializer
             SimpleXmlSerializer<ToSerialize> serializer = new SimpleXmlSerializer<ToSerialize>();
 
+            // Serialize Object to XML
             serializer.Serialization("C:/Tmp/", "serializedObject.xml", clazz);
+
 
             ToSerialize clazz2;
 
+            // Deserialize from XML to Object
             clazz2 = serializer.Deserialization("C:/Tmp/serializedObject.xml");
 
 
