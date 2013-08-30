@@ -47,7 +47,7 @@ namespace SimpleXmlSerializer
         /// EN: Object to serialize
         /// PL: Obiekt jako parametr przekazany do serializacji
         /// </param>
-        public void createXml(string path, string fileName, Object o)
+        public void Serialization(string path, string fileName, Object o)
         {
 
             try
@@ -86,7 +86,7 @@ namespace SimpleXmlSerializer
         /// PL: scieżka do pliku <example>C:\Użytkownicy\Folder\</example>
         /// </param>
         /// <returns></returns>
-        public T readXml(string pathToXmlFile)
+        public T Deserialization(string pathToXmlFile)
         {
 
             T result = default(T);
