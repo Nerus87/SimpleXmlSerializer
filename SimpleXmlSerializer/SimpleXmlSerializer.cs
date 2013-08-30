@@ -9,6 +9,8 @@ namespace SimpleXmlSerializer
     public class SimpleXmlSerializer<T>
     {
         private Type type;
+        private DataContractSerializer serializer;
+        private XmlWriterSettings settings;
 
         /// <summary>
         /// EN: Constructor:
@@ -18,7 +20,13 @@ namespace SimpleXmlSerializer
         /// </summary>
         public SimpleXmlSerializer()
         {
+
             type = typeof(T);
+            serializer = new DataContractSerializer(type);
+            settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t";
+
         }
 
         /// <summary>
@@ -55,16 +63,10 @@ namespace SimpleXmlSerializer
                     Directory.CreateDirectory(path);
                 }
 
-                Console.WriteLine("Path: " + path + " file name: " + fileName);
-
-                DataContractSerializer serializer = new DataContractSerializer(o.GetType());
-                XmlWriterSettings settings = new XmlWriterSettings();
-                settings.Indent = true;
-                settings.IndentChars = "\t";
                 XmlWriter writer = XmlWriter.Create(path + fileName, settings);
                 serializer.WriteObject(writer, o);
                 writer.Close();
-                //serializer.Serialize(File.Create(path + fileName), o);
+                
 
             }
             catch (InvalidOperationException e)
@@ -95,12 +97,7 @@ namespace SimpleXmlSerializer
                 xml = new FileInfo(pathToXmlFile);
                 if (isExistNotNull(xml))
                 {
-
-                    DataContractSerializer deserializer = new DataContractSerializer(type);
-                    result = (T)deserializer.ReadObject(File.Open(pathToXmlFile, FileMode.Open));
-
-                    //XmlSerializer deserializer = new XmlSerializer(type);
-                    //
+                    result = (T) serializer.ReadObject(File.Open(pathToXmlFile, FileMode.Open));
                 }
 
             }
